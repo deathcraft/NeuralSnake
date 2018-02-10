@@ -97,23 +97,27 @@ namespace DefaultNamespace
         public void Win()
         {
             Debug.Log("Maximum Score!");
+            ResetGame();
         }
 
         public void Lost()
         {
             Debug.Log("You loose!");
+            ResetGame();
+        }
+
+        private void ResetGame()
+        {
             snake.Reset();
 
             foreach (var food in foods)
             {
                 Destroy(food.gameObject);
             }
-            
+
             foods.Clear();
-            
+
             CreateInitialFood();
         }
-        
-        
     }
 }

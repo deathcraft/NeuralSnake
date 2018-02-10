@@ -137,7 +137,7 @@ public class Snake : MonoBehaviour
 
     public void Grow(Food food)
     {
-        if (body.Count >= positionHistory.Length)
+        if (body.Count >= positionHistory.Length - 1)
         {
             game.Win();
             return;
