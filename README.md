@@ -1,8 +1,3 @@
-# upm-package-template-3DLegacy
-Project Template for 3D scenes not using a SRP 
+# Snake Game
 
-This template uses Unity’s built in rendering pipeline. This template does not contain any example content.
-
-
-Package Name: com.unity.template.3dempty
-Package Version: 0.0.1
+Simple snake game in Unity. Feel free to use it as you see fit.
