@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using DefaultNamespace;
+﻿using System.Collections.Generic;
 using UnityEngine;
 
 public class Snake : MonoBehaviour
@@ -57,10 +55,8 @@ public class Snake : MonoBehaviour
         for (int i = 0; i < body.Count; i++)
         {
             Food food = body[i];
-            food.transform.position = positionHistory[i+1];
+            food.transform.position = positionHistory[i + 1];
         }
-        
-        
     }
 
     private void UpdatePositionHistory()
@@ -72,8 +68,8 @@ public class Snake : MonoBehaviour
                 positionHistory[i] = positionHistory[i - 1];
             }
 
-            positionHistory[0] =  head.transform.position;
-        }        
+            positionHistory[0] = head.transform.position;
+        }
     }
 
     public Vector3 HeadPosition()
@@ -142,7 +138,7 @@ public class Snake : MonoBehaviour
             game.Win();
             return;
         }
-        
+
         body.Add(food);
         food.transform.SetParent(transform);
         food.transform.localPosition = new Vector3(0, 0, -0.5f * body.Count);
@@ -151,8 +147,8 @@ public class Snake : MonoBehaviour
     public void Reset()
     {
         head.transform.position = Vector3.zero;
-        
-        
+
+
         foreach (var food in body)
         {
             Destroy(food.gameObject);
@@ -162,7 +158,7 @@ public class Snake : MonoBehaviour
         {
             positionHistory[i] = Vector3.zero;
         }
-        
+
         body.Clear();
     }
 }
