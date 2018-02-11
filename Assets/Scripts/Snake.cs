@@ -22,11 +22,15 @@ public class Snake : MonoBehaviour
 
     private List<Food> body = new List<Food>();
 
-    private Vector3[] positionHistory = new Vector3[30];
+    private Vector3[] positionHistory;
+    
+    private float halfGrid;
 
     void Start()
     {
+        positionHistory = new Vector3[game.FoodToWin];
         game = FindObjectOfType<Game>();
+        halfGrid = game.GridScale / 2;
     }
 
     void Update()
@@ -48,6 +52,17 @@ public class Snake : MonoBehaviour
                 return;
             }
         }
+
+        if (xPos <= -game.Size.x || xPos >= game.Size.x - halfGrid)
+        {
+            game.Lost();
+        }
+
+        if (zPos <= -game.Size.z || zPos >= game.Size.z - halfGrid)
+        {
+            game.Lost();
+        }
+      
     }
 
     private void UpdateFoodPosition()
@@ -86,11 +101,6 @@ public class Snake : MonoBehaviour
 
         xPos += xDelta;
         zPos += zDelta;
-
-        float halfGrid = game.GridScale / 2;
-
-        xPos = Mathf.Clamp(xPos, -game.Size.x + halfGrid, game.Size.x - halfGrid * 2);
-        zPos = Mathf.Clamp(zPos, -game.Size.z + halfGrid, game.Size.z - halfGrid * 2);
 
         pos.x = xPos >= 0 ? xPos + halfGrid : xPos;
         pos.z = zPos >= 0 ? zPos + halfGrid : zPos;
@@ -133,9 +143,9 @@ public class Snake : MonoBehaviour
 
     public void Grow(Food food)
     {
-        if (body.Count >= positionHistory.Length - 1)
+        if (IsGameDefeated())
         {
-            game.Win();
+            ProcessVictory();
             return;
         }
 
@@ -144,10 +154,22 @@ public class Snake : MonoBehaviour
         food.transform.localPosition = new Vector3(0, 0, -0.5f * body.Count);
     }
 
+    private void ProcessVictory()
+    {
+        game.Win();
+    }
+
+    private bool IsGameDefeated()
+    {
+        return body.Count >= positionHistory.Length - 1;
+    }
+
     public void Reset()
     {
         head.transform.position = Vector3.zero;
 
+        xPos = 0;
+        zPos = 0;
 
         foreach (var food in body)
         {
@@ -160,5 +182,17 @@ public class Snake : MonoBehaviour
         }
 
         body.Clear();
+    }
+
+    public void IncreaseSpeed()
+    {
+        xSpeed += 1;
+        zSpeed += 1;
+    }
+
+    public void ResetSpeed()
+    {
+        xSpeed = 1;
+        zSpeed = 1;
     }
 }

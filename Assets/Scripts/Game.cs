@@ -18,6 +18,14 @@ public class Game : MonoBehaviour
     [SerializeField]
     private Snake snake;
 
+    [SerializeField]
+    private int foodToWin = 15;
+
+    public int FoodToWin
+    {
+        get { return foodToWin; }
+    }
+
     private List<Food> foods = new List<Food>();
 
     public Vector3 Size
@@ -88,12 +96,24 @@ public class Game : MonoBehaviour
     {
         Debug.Log("Maximum Score!");
         ResetGame();
+        IncreaseSpeed();
+    }
+
+    private void IncreaseSpeed()
+    {
+        snake.IncreaseSpeed();
     }
 
     public void Lost()
     {
         Debug.Log("You loose!");
         ResetGame();
+        ResetSpeed();
+    }
+
+    private void ResetSpeed()
+    {
+        snake.ResetSpeed();
     }
 
     private void ResetGame()
