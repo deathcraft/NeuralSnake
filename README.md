@@ -1,3 +1,4 @@
-# Snake Game
+# Neural Snake
 
-Simple snake game in Unity. Feel free to use it as you see fit.
+Snake game in Unity. 
+Also, it will be able to play itself with neural network.
