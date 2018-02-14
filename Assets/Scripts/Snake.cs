@@ -26,11 +26,17 @@ public class Snake : MonoBehaviour
     
     private float halfGrid;
 
+    private float initialXSpeed;
+    private float initialZSpeed;
+
     void Start()
     {
         positionHistory = new Vector3[game.FoodToWin];
         game = FindObjectOfType<Game>();
         halfGrid = game.GridScale / 2;
+
+        initialXSpeed = xSpeed;
+        initialZSpeed = zSpeed;
     }
 
     void Update()
@@ -143,20 +149,17 @@ public class Snake : MonoBehaviour
 
     public void Grow(Food food)
     {
-        if (IsGameDefeated())
-        {
-            ProcessVictory();
-            return;
-        }
-
         body.Add(food);
         food.transform.SetParent(transform);
         food.transform.localPosition = new Vector3(0, 0, -0.5f * body.Count);
     }
 
-    private void ProcessVictory()
+    public void ProcessVictory()
     {
-        game.Win();
+        if (IsGameDefeated())
+        {
+            game.Win();
+        }
     }
 
     private bool IsGameDefeated()
@@ -184,15 +187,15 @@ public class Snake : MonoBehaviour
         body.Clear();
     }
 
-    public void IncreaseSpeed()
+    public void IncreaseSpeed(int speedIncrease)
     {
-        xSpeed += 1;
-        zSpeed += 1;
+        xSpeed += speedIncrease;
+        zSpeed += speedIncrease;
     }
 
     public void ResetSpeed()
     {
-        xSpeed = 1;
-        zSpeed = 1;
+        xSpeed = initialXSpeed;
+        zSpeed = initialZSpeed;
     }
 }

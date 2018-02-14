@@ -21,6 +21,9 @@ public class Game : MonoBehaviour
     [SerializeField]
     private int foodToWin = 15;
 
+    [SerializeField]
+    public int speedIncrease;
+
     public int FoodToWin
     {
         get { return foodToWin; }
@@ -66,9 +69,10 @@ public class Game : MonoBehaviour
 
     private void EatFood(Food food)
     {
-        foods.Remove(food);
         CreateFood();
         snake.Grow(food);
+        foods.Remove(food);
+        snake.ProcessVictory();
     }
 
     void Update()
@@ -101,7 +105,7 @@ public class Game : MonoBehaviour
 
     private void IncreaseSpeed()
     {
-        snake.IncreaseSpeed();
+        snake.IncreaseSpeed(speedIncrease);
     }
 
     public void Lost()
