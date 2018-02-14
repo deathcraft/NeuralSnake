@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using DefaultNamespace;
 using UnityEngine;
 
 public class Game : MonoBehaviour
@@ -78,8 +79,8 @@ public class Game : MonoBehaviour
     void Update()
     {
         PickLocation();
+        ProcessKeyboard();
     }
-
 
     private void CreateFood()
     {
@@ -132,5 +133,28 @@ public class Game : MonoBehaviour
         foods.Clear();
 
         CreateInitialFood();
+    }
+    
+    private void ProcessKeyboard()
+    {
+        if (Input.GetKeyDown(KeyCode.LeftArrow))
+        {
+            snake.MoveSnake(SnakeDirection.LEFT);
+        }
+
+        if (Input.GetKeyDown(KeyCode.RightArrow))
+        {
+            snake.MoveSnake(SnakeDirection.RIGHT);
+        }
+
+        if (Input.GetKeyDown(KeyCode.UpArrow))
+        {
+            snake.MoveSnake(SnakeDirection.UP);
+        }
+
+        if (Input.GetKeyDown(KeyCode.DownArrow))
+        {
+            snake.MoveSnake(SnakeDirection.DOWN);
+        }
     }
 }

@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using DefaultNamespace;
 using UnityEngine;
 
 public class Snake : MonoBehaviour
@@ -45,7 +47,6 @@ public class Snake : MonoBehaviour
         UpdatePositionHistory();
         UpdateFoodPosition();
         DetectLost();
-        ProcessKeyboard();
     }
 
     private void DetectLost()
@@ -68,7 +69,6 @@ public class Snake : MonoBehaviour
         {
             game.Lost();
         }
-      
     }
 
     private void UpdateFoodPosition()
@@ -117,26 +117,24 @@ public class Snake : MonoBehaviour
         head.transform.position = pos;
     }
 
-    private void ProcessKeyboard()
+    public void MoveSnake(SnakeDirection dir)
     {
-        if (Input.GetKeyDown(KeyCode.LeftArrow))
+        switch (dir)
         {
-            SetDirection(new Vector3(-1, 0, 0));
-        }
-
-        if (Input.GetKeyDown(KeyCode.RightArrow))
-        {
-            SetDirection(new Vector3(1, 0, 0));
-        }
-
-        if (Input.GetKeyDown(KeyCode.UpArrow))
-        {
-            SetDirection(new Vector3(0, 0, 1));
-        }
-
-        if (Input.GetKeyDown(KeyCode.DownArrow))
-        {
-            SetDirection(new Vector3(0, 0, -1));
+            case SnakeDirection.UP:
+                SetDirection(new Vector3(0, 0, 1));
+                break;
+            case SnakeDirection.DOWN:
+                SetDirection(new Vector3(0, 0, -1));
+                break;
+            case SnakeDirection.LEFT:
+                SetDirection(new Vector3(-1, 0, 0));
+                break;
+            case SnakeDirection.RIGHT:
+                SetDirection(new Vector3(1, 0, 0));
+                break;
+            default:
+                throw new ArgumentOutOfRangeException("dir", dir, null);
         }
     }
 
